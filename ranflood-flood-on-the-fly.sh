@@ -1,8 +1,5 @@
 #!/bin/bash
 
-
-test_file="test_n.txt"
-
 usage() {
 	echo "Usage: $0 [N]"
 	echo "	N: test number. If not provided, read from $test_file"
@@ -25,13 +22,6 @@ else
 fi
 
 
-dirname="checker-sss-ransomware-$N"
-mkdir $dirname
-
-
-java -jar ./filechecker save $dirname/checksum-$N.json build-compare-$N
-
-java -jar ./filechecker restore --delete --debug -l="$dirname/log-$N.txt" \
-	$dirname/checksum-$N.json \
-	$dirname/report-shards-$N.json $dirname/report-$N.json \
-	build-compare-$N
+./ranflood.sh snapshot take on-the-fly build-compare-$N
+sleep 1
+./ranflood.sh flood start on-the-fly build-compare-$N

@@ -13,8 +13,27 @@ rm build/libs/*
 cd ../ranflood-test
 
 
-# test number
-N=$(date +'%Y%m%d-%H_%M_%S')
+usage() {
+	echo "Usage: $0 [N]"
+	echo "	N: test number. If not provided, generated."
+	exit 1
+}
+
+
+if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+	usage
+elif [ -z "$1" ]; then
+	if [ ! -f "$test_file" ]; then
+		echo "Error: $test_file not found"
+		usage
+	else
+		# test number
+		N=$(date +'%Y%m%d-%H_%M_%S')
+	fi
+else
+	N="$1"
+fi
+
 
 test_file="test_n.txt"
 
